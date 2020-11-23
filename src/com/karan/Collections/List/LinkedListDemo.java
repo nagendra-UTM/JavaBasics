@@ -1,4 +1,4 @@
-package com.karan.Collections;
+package com.karan.Collections.List;
 
 import java.util.List;
 import java.util.Iterator;
