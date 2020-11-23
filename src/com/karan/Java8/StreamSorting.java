@@ -23,6 +23,7 @@ public class StreamSorting {
 		l = list.stream().sorted((a,b) -> (a>b) ? 1 : (a<b) ? -1 : 0).collect(Collectors.toList());
 		System.out.println(l);
 		
+		
 		Stream.of(9, 99, 100, "Nagendra", "Karan", 200, 43).forEach(System.out::print);
 	}
 
