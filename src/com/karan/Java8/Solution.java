@@ -1,133 +1,121 @@
 package com.karan.Java8;
 
-
 import java.io.*;
 import java.math.*;
 import java.security.*;
 import java.text.*;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.function.*;
 import java.util.regex.*;
-import java.util.stream.*;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-
-
-
-class Result {
-
-    /*
-     * Complete the 'mostActive' function below.
-     *
-     * The function is expected to return a STRING_ARRAY.
-     * The function accepts STRING_ARRAY customers as parameter.
-     */
-
-    public static List<String> mostActive(List<String> customers) {
-    // Write your code here
-
-    	long len = customers.size();
-        TreeMap<String, Integer> tree = new TreeMap<>();
-        
-        TreeMap<String, Integer> result = new TreeMap<>();
-        List<String> arr = new ArrayList<String>();
-        double total = 0, check=0;
-        
-        for(int i=0; i<len; i++) {
-            if(tree.containsKey(customers.get(i))) {
-                int value = tree.get(customers.get(i));
-                tree.put(customers.get(i), value+1 );
-            }
-            else {
-                tree.put(customers.get(i), 1);
-            }
-        }
-        
-        total = ((new Integer(5*customers.size())).doubleValue()/(new Integer(100)).doubleValue());
-        for(Map.Entry<String, Integer> m : tree.entrySet()) {
-            
-            check = (new Integer(m.getValue() * 100)).doubleValue() / (new Integer((int)len).doubleValue());
-            System.out.println(check + "    "+ total);
-            if ( check >= total ) {
-                result.put(m.getKey(), m.getValue());
-            }
-        }
-        
-        for(Map.Entry<String, Integer> m : result.entrySet()) {
-            arr.add(m.getKey());
-        }
-        
-        return arr;
-
-    }
-
-}
 
 public class Solution {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-//        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int customersCount = Integer.parseInt(bufferedReader.readLine().trim());
-
-        List<String> customers = IntStream.range(0, customersCount).mapToObj(i -> {
-            try {
-                return bufferedReader.readLine();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+    
+    static int getMedian(int[] count, int d){
+        
+        int i, freq[], val, index=0;
+        freq = new int[201];
+        freq[0] = count[0];
+        for(i=1; i<201; i++){
+            freq[i] = freq[i-1] + count[i];
+        }
+        
+        val = (d/2);
+        if(d%2 == 0) {
+            int firstIndex=0;
+            for(i=0; i<201; ){
+                if( freq[i] < val  ){
+                    i++;
+                } else {
+                    firstIndex = i;
+                    break;
+                }
+//                System.out.println("In even modulo");
             }
-        })
-            .collect(toList());
+            for(i=firstIndex+1; i<201; ){
+                if( freq[i] <= val  ){
+                    i++;
+                } else {
+                    index = i;
+                    break;
+                }
+            }
+//            System.out.println("THis is fitem : "+ firstIndex+ "  and index : " + index);
+            return (index+firstIndex);
+        } else {
+            val++;
+            for(i=0; i<201; ){
+                if( freq[i] < val  ){
+                    i++;
+                } else {
+                    index = i;
+                    break;
+                }
+//                System.out.println("In odd modulo");
+            }
+            System.out.println("THis is item : "+ index*2);
+            return (index*2);
+        }    
+        
+    }
 
-        List<String> result = Result.mostActive(customers);
+    // Complete the activityNotifications function below.
+    static int activityNotifications(int[] expenditure, int d) {
+        
+        int n=expenditure.length, i, count[], notice=0, median, rm, ele;
+        count = new int[201];
+        
+        Queue<Integer> arrayQ = new ArrayDeque<Integer>();
+        
+        for(i=0; i<d; i++){
+            arrayQ.add(expenditure[i]);
+            count[expenditure[i]]++;
+        }
+        
+        for(i=d; i<n; i++){
+//        	System.out.println("In the Main");
+            ele = expenditure[i];
+            median = getMedian(count, d);
+            if(ele>=median){
+                notice++;
+            }
+            
+            rm = arrayQ.remove();
+            count[rm]--;
+            arrayQ.add(ele);
+            count[ele]++;
+            
+        }
+        return notice;
+    }
 
-        System.out.println(result.stream()
-                .collect(joining("\n")));
-//        bufferedWriter.write(
-//            result.stream()
-//                .collect(joining("\n"))
-//            + "\n"
-//        );
+    private static final Scanner scanner = new Scanner(System.in);
 
-        bufferedReader.close();
+    public static void main(String[] args) throws IOException {
+
+        String[] nd = scanner.nextLine().split(" ");
+
+        int n = Integer.parseInt(nd[0]);
+
+        int d = Integer.parseInt(nd[1]);
+
+        int[] expenditure = new int[n];
+
+        String[] expenditureItems = scanner.nextLine().split(" ");
+//        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        for (int i = 0; i < n; i++) {
+            int expenditureItem = Integer.parseInt(expenditureItems[i]);
+            expenditure[i] = expenditureItem;
+        }
+
+        int result = activityNotifications(expenditure, d);
+        System.out.println(result);
+//        bufferedWriter.write(String.valueOf(result));
+//        bufferedWriter.newLine();
+//
 //        bufferedWriter.close();
+
+        scanner.close();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//24
-//ABC
-//ABC
-//PQR
-//PQR
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Alpha
-//Omega
-//Beta

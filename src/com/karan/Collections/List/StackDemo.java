@@ -1,7 +1,10 @@
 package com.karan.Collections.List;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class StackDemo {
 
@@ -42,6 +45,17 @@ public class StackDemo {
 		listStack.set(0, 100);
 		System.out.println("\n"+listStack);
 		System.out.println("TOP ELEMENT = "+ listStack.peek());
+		
+		System.out.println("-------------------------------");
+		itr = listStack.iterator();
+		while(itr.hasNext()) 
+			System.out.print(itr.next()+ "  ");
+		System.out.println("\n-------------------------------");
+		List<Integer> l = new ArrayList<Integer>();
+		l = listStack.stream().collect(Collectors.toList());
+		System.out.println("Here \n"+l);
+		System.out.println();
+		System.out.println(l.get(l.size()-1));
 	}
 
 }

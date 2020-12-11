@@ -22,7 +22,8 @@ public class ArrayQueue {
 		q.add(19);
 		
 		System.out.println(q);
-		q.remove();
+//		q.remove();
+		System.out.println("The removed element = "+ q.remove());
 		System.out.println(q);
 		q.remove();
 		System.out.println(q);
