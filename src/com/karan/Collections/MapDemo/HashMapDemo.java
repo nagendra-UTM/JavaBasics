@@ -1,6 +1,7 @@
 package com.karan.Collections.MapDemo;
 
 import java.util.Map;
+import java.util.stream.Stream;
 import java.util.HashMap;
 
 public class HashMapDemo {
@@ -25,6 +26,7 @@ public class HashMapDemo {
 		
 		m.replace(1, "ABCD");
 		System.out.println(m);
+		
 		
 	}
 

@@ -11,6 +11,10 @@ public class StreamSorting {
 	public static void main(String[] args) {
 		
 		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		System.out.println("BEfore Sorting---------"+list+"------------\n");
+		
+		
 		for(int i=ThreadLocalRandom.current().nextInt(15, 23); i>0; i--) {
 			list.add(ThreadLocalRandom.current().nextInt(24, 78));
 		}
